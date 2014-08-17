@@ -18,7 +18,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Generate migration and shared_tasks folder
+
+    $ rails g shared_tasks:install
+
+Create a new task
+
+    $ rails g shared_tasks:shared_task new_task_name
+
+Run tasks
+
+    $ rake shared_task:tasks
+
+Run single task
+
+    $ rake shared_task:task[file_name, task_name]
+
+
+
 
 ## Contributing
 
