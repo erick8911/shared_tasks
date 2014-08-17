@@ -110,7 +110,7 @@ module DeploymentTasks
               puts "Running single task"
               eval("#{class_name}.#{task}")
             else
-              raise "There isnt a task with name given"
+              raise "There isnt a task with name given => #{class_name}.#{task} "
             end
           end
         end

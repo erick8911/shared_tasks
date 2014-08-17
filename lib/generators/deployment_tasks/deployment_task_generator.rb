@@ -21,14 +21,6 @@ module DeploymentTasks
 
 
       class << self
-        def #{file_name}
-          #{file_name.camelize}Deployment.methods(false).each do |metad|
-            if metad != :#{file_name} && metad != :destroy_actions
-              puts "Running => " + metad.to_s
-              eval(metad.to_s)
-            end
-          end
-        end
 
         ################
         ##Code Goes Here
@@ -43,7 +35,6 @@ module DeploymentTasks
         def destroy_actions
           #Actions before destroy
         end
-
 
       end
 
