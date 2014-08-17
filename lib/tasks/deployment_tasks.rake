@@ -1,15 +1,16 @@
 namespace :deployment do
 
-  #rake db:deployment_tasks # Run not executed tasks
+  #rake deployment:deployment_tasks
   desc "Run deployment tasks"
   task :deployment_tasks => :environment do
     DeploymentTasks::Task.run_tasks
   end
 
-  #rake db:deployment_task file_name method_name # Run specific task (Overide)
+  #rake deployment:deployment_task[file_name,task_name]
   desc "Run deployment tasks"
   task :deployment_task, [:file_name, :task_name] => :environment do |t, args|
-    DeploymentTask.run_single_task(args.name, args.task)
+    puts args.task_name
+    DeploymentTasks::Task.run_single_task(args.name, args.task_name)
   end
 
 end

@@ -98,19 +98,21 @@ module DeploymentTasks
 
         def run_task(task = file_name)
           class_name = "#{file_name.camelize}Deployment".constantize
-          #task_to_run = "#{class_name}.#{task}"
-          #puts ".......#{@file}..=> #{task_to_run}......"
-          #eval(task_to_run)
-
-          class_name.methods(false).each do |metad|
-            if metad != :destroy_actions && metad != :_validators
-              puts "Running => " + metad.to_s
-              eval("#{class_name}.#{metad.to_s}")
+          if task == file_name
+            class_name.methods(false).each do |metad|
+              if metad != :destroy_actions && metad != :_validators
+                puts "Running => " + metad.to_s
+                eval("#{class_name}.#{metad.to_s}")
+              end
+            end
+          else
+            if class_name.methods(false).include?(task.to_sym)
+              puts "Running single task"
+              eval("#{class_name}.#{task}")
+            else
+              raise "There isnt a task with name given"
             end
           end
-
-
-
         end
 
         def route
