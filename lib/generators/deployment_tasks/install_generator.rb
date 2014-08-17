@@ -15,7 +15,7 @@ module DeploymentTasks
 
       route_file =  File.join(File.dirname(__FILE__), "templates/")
       source_root route_file
-      puts route_file
+      #puts route_file
 
       def self.next_migration_number(path)
         Time.now.utc.strftime("%Y%m%d%H%M%S")
@@ -23,8 +23,7 @@ module DeploymentTasks
 
       def copy_migration
         migration_template 'migration.rb', "db/migrate/create_deployment_tasks"
-        #copy_file "deployment_tasks", "lib"
-        #FileUtils.cp_r( "/lib/deployment_tasks", "lib" )
+        empty_directory("lib/deployment_tasks")
       end
 
       # Generator Code. Remember this is just suped-up Thor so methods are executed in order
