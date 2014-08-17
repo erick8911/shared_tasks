@@ -1,4 +1,4 @@
-# DeploymentTasks
+# SharedTasks
 
 TODO: Write a gem description
 
@@ -6,7 +6,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'deployment_tasks'
+    gem 'shared_tasks'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install deployment_tasks
+    $ gem install shared_tasks
 
 ## Usage
 

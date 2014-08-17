@@ -1,6 +1,6 @@
 require 'rails/generators'
 
-module DeploymentTasks
+module SharedTasks
   module Generators
     class InstallGenerator < Rails::Generators::Base
       include Rails::Generators::Migration
@@ -22,8 +22,8 @@ module DeploymentTasks
       end
 
       def copy_migration
-        migration_template 'migration.rb', "db/migrate/create_deployment_tasks"
-        empty_directory("lib/deployment_tasks")
+        migration_template 'migration.rb', "db/migrate/create_shared_tasks"
+        empty_directory("lib/shared_tasks")
       end
 
       # Generator Code. Remember this is just suped-up Thor so methods are executed in order

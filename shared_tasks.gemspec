@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'deployment_tasks/version'
+require 'shared_tasks/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "deployment_tasks"
-  spec.version       = DeploymentTasks::VERSION
+  spec.name          = "shared_tasks"
+  spec.version       = SharedTasks::VERSION
   spec.authors       = ["Erick"]
   spec.email         = ["erick_8911@hotmail.com"]
   spec.description   = %q{TODO: Write a gem description}

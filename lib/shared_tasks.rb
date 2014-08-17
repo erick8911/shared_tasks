@@ -1,6 +1,6 @@
-require "deployment_tasks/version"
-require "deployment_tasks/config"
-require 'deployment_tasks/railtie'  ##Esential!
+require "shared_tasks/version"
+require "shared_tasks/config"
+require 'shared_tasks/railtie'  ##Esential!
 
 Array.module_eval do
   def remove_last(n = 1)
@@ -9,17 +9,17 @@ Array.module_eval do
 end
 
 
-module DeploymentTasks
+module SharedTasks
   # Your code goes here...
 
   class << self
     def config
-      @@config ||= DeploymentTasks::Config.instance
+      @@config ||= SharedTasks::Config.instance
     end
   end
 
   class Task < ::ActiveRecord::Base
-    self.table_name = DeploymentTasks.config.table_name
+    self.table_name = SharedTasks.config.table_name
     before_destroy :rollback_actions
 
 
@@ -36,11 +36,11 @@ module DeploymentTasks
 
     private
       def route
-        "lib/deployment_tasks"
+        "lib/shared_tasks"
       end
 
       def file_route
-        "lib/deployment_tasks/#{@file}"
+        "lib/shared_tasks/#{@file}"
       end
 
       def load_file
@@ -52,7 +52,7 @@ module DeploymentTasks
       end
 
       def run_task(task = file_name)
-        class_name = "#{file_name.camelize}Deployment".constantize
+        class_name = "#{file_name.camelize}Shared".constantize
         task_to_run = "#{class_name}.#{task}"
         puts ".......#{@file}..=> #{task_to_run}......"
         eval(task_to_run)
@@ -64,12 +64,14 @@ module DeploymentTasks
       class << self
 
 
+
+
         def run_tasks
-          puts "Running deployment tasks"
+          puts "Running shared tasks"
           files = Dir.entries(route).select {|f| !File.directory?(f)}
           files.each do |file|
             @file = file
-            DeploymentTasks::Task.where(task: file_date).first_or_create do
+            SharedTasks::Task.where(task: file_date).first_or_create do
               load_and_run_task if File.exist?(file_route)
             end
           end
@@ -97,7 +99,7 @@ module DeploymentTasks
         end
 
         def run_task(task = file_name)
-          class_name = "#{file_name.camelize}Deployment".constantize
+          class_name = "#{file_name.camelize}Shared".constantize
           if task == file_name
             class_name.methods(false).each do |metad|
               if metad != :destroy_actions && metad != :_validators
@@ -116,11 +118,11 @@ module DeploymentTasks
         end
 
         def route
-          "lib/deployment_tasks"
+          "lib/shared_tasks"
         end
 
         def file_route
-          "lib/deployment_tasks/#{@file}"
+          "lib/shared_tasks/#{@file}"
         end
 
         def file_name

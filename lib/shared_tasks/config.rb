@@ -1,5 +1,5 @@
 require 'singleton'
-module DeploymentTasks
+module SharedTasks
   # Class used to initialize configuration object.
 
   class Config
@@ -7,7 +7,7 @@ module DeploymentTasks
     attr_accessor :table_name
 
     def initialize
-      @table_name = "deployment_tasks"
+      @table_name = "shared_tasks"
     end
   end
 
