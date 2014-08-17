@@ -63,10 +63,6 @@ module DeploymentTasks
 
       class << self
 
-        def no_name
-          puts "HI"
-        end
-
 
         def run_tasks
           puts "Running deployment tasks"
@@ -91,37 +87,47 @@ module DeploymentTasks
           end
         end
 
-          def load_and_run_task(task = file_name)
-            load_file
-            run_task(task)
+        def load_and_run_task(task = file_name)
+          load_file
+          run_task(task)
+        end
+
+        def load_file
+          load(file_route)
+        end
+
+        def run_task(task = file_name)
+          class_name = "#{file_name.camelize}Deployment".constantize
+          #task_to_run = "#{class_name}.#{task}"
+          #puts ".......#{@file}..=> #{task_to_run}......"
+          #eval(task_to_run)
+
+          class_name.methods(false).each do |metad|
+            if metad != :destroy_actions && metad != :_validators
+              puts "Running => " + metad.to_s
+              eval("#{class_name}.#{metad.to_s}")
+            end
           end
 
-          def load_file
-            load(file_route)
-          end
 
-          def run_task(task = file_name)
-            class_name = "#{file_name.camelize}Deployment".constantize
-            task_to_run = "#{class_name}.#{task}"
-            puts ".......#{@file}..=> #{task_to_run}......"
-            eval(task_to_run)
-          end
 
-          def route
-            "lib/deployment_tasks"
-          end
+        end
 
-          def file_route
-            "lib/deployment_tasks/#{@file}"
-          end
+        def route
+          "lib/deployment_tasks"
+        end
 
-          def file_name
-            @file.split("_").drop(1).join("_").split(".").remove_last.first
-          end
+        def file_route
+          "lib/deployment_tasks/#{@file}"
+        end
 
-          def file_date
-            @file.split("_").shift
-          end
+        def file_name
+          @file.split("_").drop(1).join("_").split(".").remove_last.first
+        end
+
+        def file_date
+          @file.split("_").shift
+        end
 
       end
     #/Public
